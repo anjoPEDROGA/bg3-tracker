@@ -568,5 +568,12 @@ function importSave(event) {
     reader.readAsText(file);
 }
 
+function toggleHeader() {
+    const header = document.querySelector('.header');
+    const btn = document.getElementById('toggle-header');
+    header.classList.toggle('collapsed');
+    btn.textContent = header.classList.contains('collapsed') ? '▼ Expandir' : '▲ Recolher';
+}
+
 // Arranca a aplicação
 initApp();
