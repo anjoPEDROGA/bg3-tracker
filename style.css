@@ -458,6 +458,12 @@ input[type="checkbox"]:checked::after {
    COMPATIBILIDADE MOBILE (SMARTPHONES)
    ========================================== */
 @media (max-width: 600px) {
+    /* Destrava o cabeçalho no celular para não engolir a tela */
+    .header {
+        position: relative;
+        padding-top: 15px;
+    }
+
     /* Ajusta os botões de cima para ficarem em coluna */
     .profile-manager, .controls-panel {
         flex-direction: column;
@@ -472,16 +478,15 @@ input[type="checkbox"]:checked::after {
     .tabs {
         overflow-x: auto;
         white-space: nowrap;
-        padding-bottom: 5px; /* Espaço para a barra de rolagem não cortar o texto */
+        padding-bottom: 5px;
     }
 
     .tab-btn {
-        flex: 0 0 auto; /* Impede os botões de esmagarem uns aos outros */
+        flex: 0 0 auto; 
         padding: 10px 15px;
         font-size: 1rem;
     }
 
-    /* Ajusta as margens dos cartões para aproveitar o espaço da tela */
     .container {
         padding: 15px 10px;
     }
