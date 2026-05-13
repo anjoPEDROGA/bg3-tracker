@@ -212,9 +212,23 @@ function renderGuide() {
             li.className = 'task-item';
             if (savedProgress[task.id]) li.classList.add('completed');
 
-            let tagHtml = '';
+            let tagsHtml = '';
+            if (task.missable) {
+                tagsHtml += `<span class="tag tag-missable">⚠ Missable</span>`;
+            }
             if (task.type && tagNames[task.type]) {
-                tagHtml = `<span class="tag tag-${task.type}">${tagNames[task.type]}</span>`;
+                tagsHtml += `<span class="tag tag-${task.type}">${tagNames[task.type]}</span>`;
+            }
+
+            let rewardsHtml = '';
+            if (task.rewards && task.rewards.length > 0) {
+                const rewardNames = task.rewards.map(rid => {
+                    const found = lootData.flatMap(s => s.items).find(i => i.id === rid);
+                    return found ? `<span class="tag-reward rarity-${found.rarity}">${found.name}</span>` : '';
+                }).filter(Boolean).join('');
+                if (rewardNames) {
+                    rewardsHtml = `<div class="task-rewards">🎁 ${rewardNames}</div>`;
+                }
             }
 
             const isChecked = savedProgress[task.id] ? 'checked' : '';
@@ -222,8 +236,9 @@ function renderGuide() {
             li.innerHTML = `
                 <input type="checkbox" id="${task.id}" ${isChecked} onchange="toggleTask('${task.id}', ${secIndex})">
                 <label class="task-content-wrapper" for="${task.id}">
-                    ${tagHtml}
+                    <div class="task-tags">${tagsHtml}</div>
                     <span class="task-text">${task.text}</span>
+                    ${rewardsHtml}
                 </label>
             `;
             taskList.appendChild(li);
@@ -275,9 +290,19 @@ function renderLoot() {
             li.className = 'task-item';
             if (savedProgress[item.id]) li.classList.add('completed');
 
-            let tagsHtml = '';
+            let missableHtml = item.missable ? `<span class="tag tag-missable">⚠ Missable</span>` : '';
+
+            let relatedHtml = '';
+            if (item.relatedQuest) {
+                const relatedSection = guideData.find(s => s.tasks.some(t => t.id === item.relatedQuest));
+                if (relatedSection) {
+                    relatedHtml = `<span class="loot-related">📋 Quest: ${relatedSection.sectionTitle}</span>`;
+                }
+            }
+
+            let tagsRow = '';
             if (item.recommendedFor && item.recommendedFor.length > 0) {
-                tagsHtml = `<div class="recommended-tags">${item.recommendedFor.map(t => `<span class="tag-build">${t}</span>`).join('')}</div>`;
+                tagsRow = `<div class="recommended-tags">${item.recommendedFor.map(t => `<span class="tag-build">${t}</span>`).join('')}</div>`;
             }
 
             const isChecked = savedProgress[item.id] ? 'checked' : '';
@@ -285,12 +310,14 @@ function renderLoot() {
             li.innerHTML = `
                 <input type="checkbox" id="${item.id}" ${isChecked} onchange="toggleTask('${item.id}', null)">
                 <label class="task-content-wrapper" for="${item.id}">
+                    <div class="task-tags">${missableHtml}</div>
                     <span class="task-text rarity-${item.rarity}">${item.name}</span>
                     <div class="loot-details">
                         <span><strong>📍 Onde:</strong> ${item.location}</span>
                         <span>${item.description}</span>
+                        ${relatedHtml}
                     </div>
-                    ${tagsHtml}
+                    ${tagsRow}
                 </label>
             `;
             taskList.appendChild(li);
@@ -566,13 +593,6 @@ function importSave(event) {
         event.target.value = '';
     };
     reader.readAsText(file);
-}
-
-function toggleHeader() {
-    const header = document.querySelector('.header');
-    const btn = document.getElementById('toggle-header');
-    header.classList.toggle('collapsed');
-    btn.textContent = header.classList.contains('collapsed') ? '▼ Expandir' : '▲ Recolher';
 }
 
 // Arranca a aplicação
