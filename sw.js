@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bg3-tracker-v1';
+const CACHE_NAME = 'bg3-tracker-v2'; // Mudamos para v2
 const ASSETS_TO_CACHE = [
   './index.html',
   './style.css',
