@@ -6,6 +6,8 @@
     <title>Baldur's Gate 3 - Tracker Definitivo</title>
     
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#161210">
 </head>
 <body>
 
@@ -92,5 +94,15 @@
     <script src="buildsData.js"></script>
     <script src="lootData.js"></script>
     <script src="app.js"></script>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('Service Worker Registrado!', reg))
+            .catch(err => console.log('Erro no Service Worker', err));
+        });
+      }
+    </script>
 </body>
 </html>
