@@ -37,7 +37,9 @@ body {
     width: 100%;
     background-color: var(--bg-panel);
     border-bottom: 2px solid var(--border-color);
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -498,3 +500,29 @@ input[type="checkbox"]:checked::after {
         padding: 10px 15px;
     }
 }
+
+/* --- TOGGLE HEADER --- */
+#toggle-header {
+    width: 100%;
+    background: var(--bg-panel);
+    color: var(--text-muted);
+    border: none;
+    border-top: 1px solid var(--border-color);
+    padding: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#toggle-header:hover { color: var(--gold-accent); }
+
+.header.collapsed > *:not(#toggle-header) {
+    display: none;
+}
+
+.header {
+    position: relative;
+}
+
