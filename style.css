@@ -13,6 +13,7 @@
     --tag-boss: #8c2b2b;
     --tag-loot: #b8860b;
     --tag-danger: #6b2b8c;
+    --tag-missable: #8c4a00;
 }
 
 /* --- BASE & RESET --- */
@@ -375,6 +376,37 @@ input[type="checkbox"]:checked::after {
 .tag-boss { background-color: var(--tag-boss); color: #fff; }
 .tag-loot { background-color: var(--tag-loot); color: #fff; }
 .tag-danger { background-color: var(--tag-danger); color: #fff; }
+.tag-missable { background-color: var(--tag-missable); color: #ffcc88; border: 1px solid #cc6600; }
+
+.task-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    min-height: 4px;
+}
+
+.task-rewards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+    margin-top: 4px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.tag-reward {
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.loot-related {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.8rem;
+    color: var(--gold-dim);
+    font-style: italic;
+}
 
 /* --- LOOT & RARITY --- */
 .rarity-legendary { color: #ffb700 !important; font-weight: bold; text-shadow: 0 0 5px rgba(255, 183, 0, 0.3); }
@@ -500,29 +532,3 @@ input[type="checkbox"]:checked::after {
         padding: 10px 15px;
     }
 }
-
-/* --- TOGGLE HEADER --- */
-#toggle-header {
-    width: 100%;
-    background: var(--bg-panel);
-    color: var(--text-muted);
-    border: none;
-    border-top: 1px solid var(--border-color);
-    padding: 6px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-#toggle-header:hover { color: var(--gold-accent); }
-
-.header.collapsed > *:not(#toggle-header) {
-    display: none;
-}
-
-.header {
-    position: relative;
-}
-
